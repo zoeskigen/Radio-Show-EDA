@@ -1,0 +1,53 @@
+---
+title: "my radio show"
+output: pdf_document
+date: "2024-07-02"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+```{r}
+radio_data <- read_csv("/Users/zoeskigen/Desktop/radio.csv")
+head(radio_data)
+```
+```{r}
+radio_data$`Playlist Date` <- as.Date(radio_data$`Playlist Date`, format = "%B %d, %Y")
+
+genre_over_time <- radio_data %>%
+     group_by(`Playlist Date`, Genre) %>%
+     summarise(Song_Count = n(), .groups = 'drop')
+
+# Enhanced plot
+ggplot(genre_over_time, aes(x = `Playlist Date`, y = Song_Count, color = Genre)) +
+  geom_line(size = 1.2) +  # Thicker line
+  geom_point(size = 2, shape = 21, fill = "white") +  # Add points with white fill
+  scale_color_brewer(palette = "Set1") +  # Color palette for better distinction
+  labs(title = "Trend of Genres Over Time",
+       subtitle = "Analysis of song genres played over time on the radio show",
+       x = "Date",
+       y = "Number of Songs",
+       color = "Genre") +
+  theme_minimal() +  # Minimal theme
+  theme(plot.title = element_text(face = "bold", size = 14),
+        plot.subtitle = element_text(face = "italic"),
+        legend.position = "bottom",  # Adjust legend position
+        legend.title = element_text(face = "bold", size = 10),
+        legend.text = element_text(size = 8),
+        axis.text.x = element_text(angle = 45, hjust = 1))  # Improve x-axis labels readability
+
+# Print the plot
+print(genre_over_time_plot)
+
+```
+```{r}
+# Faceted plot
+ggplot(genre_over_time, aes(x = `Playlist Date`, y = Song_Count, color = Genre)) +
+  geom_line(size = 1) +
+  facet_wrap(~ Genre, scales = "free_y") +
+  labs(title = "Trend of Genres Over Time", x = "Date", y = "Number of Songs") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
