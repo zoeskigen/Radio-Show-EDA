@@ -1,0 +1,12 @@
+name: KSPCWrapped
+title: KSPCWrapped
+username: zoeskigen
+account: zoeskigen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12266529
+bundleId: 8816850
+url: https://zoeskigen.shinyapps.io/KSPCWrapped/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
